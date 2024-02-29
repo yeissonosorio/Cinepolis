@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.informacion_reserva"
+             Title="informacion_reserva" 
+             Background="White">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Reserva" FontFamily="ProtestGuerrillaRegular" TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" HeightRequest="50" FontSize="30"  Margin="0,0,50,0"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <VerticalStackLayout>
+        <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal" Padding="0,0,10,0" Margin="0">
+                    <StackLayout>
+                        <Image Source="poster.webp" WidthRequest="100"></Image>
+                    </StackLayout>
+                    <StackLayout Margin="10">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                            <Label Text="MADAME WEB" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="ubicacion.png" WidthRequest="30"></Image>
+                            <Label Text="San Pedro sula" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="calendario.png" WidthRequest="30"></Image>
+                            <Label Text="feb 16 2024 15:30" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Descripción" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="Sala: #1" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="Cantidad de Entradas: 6" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="Total de entradas: L.600" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="Snack inclidos" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="3 combo #1 total L.150 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="1 combo #2 total L.75 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="3 combo #3 total L.200 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label Text="Total a pagar: L.1025" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>
