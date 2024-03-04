@@ -1,8 +1,11 @@
+using System.Collections.ObjectModel;
+
 namespace Cinepolis;
 
 public partial class Historial : ContentPage
 {
-    string his = "";
+    ObservableCollection<string> Posts { get; set; } = new ObservableCollection<string>();
+    string his = "ds";
 	public Historial()
 	{
 		InitializeComponent();
@@ -15,7 +18,11 @@ public partial class Historial : ContentPage
             imagenpa.IsVisible = false;
             textosin.IsVisible = false;
         }
-	}
+        
+        Posts.Add(his);
+
+        postListView.ItemsSource = Posts;
+    }
 
     private async void ToolbarItem_Clicked(object sender, EventArgs e)
     {

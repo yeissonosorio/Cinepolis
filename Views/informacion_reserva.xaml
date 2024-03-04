@@ -15,7 +15,7 @@
             <StackLayout Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" Padding="0,0,10,0" Margin="0">
                     <StackLayout>
-                        <Image Source="poster.webp" WidthRequest="100"></Image>
+                        <Image Source="https://imgc.allpostersimages.com/img/posters/five-nights-at-freddy-s-movie-teaser-one-sheet_u-L-FAC0H00.jpg" WidthRequest="100"></Image>
                     </StackLayout>
                     <StackLayout Margin="10">
                         <StackLayout Orientation="Horizontal">

@@ -64,6 +64,7 @@
 	  <None Remove="Resources\Fonts\Caveat-SemiBold.ttf" />
 	  <None Remove="Resources\Fonts\Oswald-Regular.ttf" />
 	  <None Remove="Resources\Fonts\ProtestGuerrilla-Regular.ttf" />
+	  <None Remove="Resources\Images\banner.webp" />
 	  <None Remove="Resources\Images\calendario.png" />
 	  <None Remove="Resources\Images\cine.svg" />
 	  <None Remove="Resources\Images\cinepolisps.jpg" />
@@ -77,6 +78,9 @@
 	  <None Remove="Resources\Images\iconore.png" />
 	  <None Remove="Resources\Images\iconos.png" />
 	  <None Remove="Resources\Images\logoc.png" />
+	  <None Remove="Resources\Images\nachos.jpg" />
+	  <None Remove="Resources\Images\nachos_palo.png" />
+	  <None Remove="Resources\Images\nachos_palo_hot.jpg" />
 	  <None Remove="Resources\Images\palomitas.png" />
 	  <None Remove="Resources\Images\poster.webp" />
 	  <None Remove="Resources\Images\ubicacion.png" />
@@ -90,13 +94,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Historial.xaml">
+	  <MauiXaml Update="snack.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="informacion_reserva.xaml">
+	  <MauiXaml Update="Views\Historial.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sala_Reserva.xaml">
+	  <MauiXaml Update="Views\informacion_reserva.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Sala_Reserva.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

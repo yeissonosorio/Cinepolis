@@ -1,0 +1,115 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.snack"
+             Title="">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#4CAF50"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="CornerRadius" Value="30"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Snacks" FontFamily="ProtestGuerrillaRegular" TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" HeightRequest="50" FontSize="30"  Margin="0,0,50,0"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView >
+
+        <StackLayout VerticalOptions="StartAndExpand" Margin="10" Orientation="Vertical">
+        <Grid HeightRequest="70">
+                <Image Source="banner.webp" Aspect="AspectFill" TranslationY="-15"/>
+        </Grid>
+        <Frame CornerRadius="20" BackgroundColor="White">
+            <StackLayout Orientation="Horizontal">
+                <!-- Botones de incremento y decremento -->
+                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                    <Image Source="nachos" HorizontalOptions="CenterAndExpand" WidthRequest="100"></Image>
+                    <Label x:Name="snack1" Text="0" FontSize="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontFamily="OswaldRegular"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="mas" Text="+"  Style="{StaticResource ButtonStyle}" Clicked="mas_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                        <Button x:Name="menos"  Text="-"  Style="{StaticResource ButtonStyle}" Clicked="menos_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="StartAndExpand">
+                    <Label Text="nachos" HorizontalOptions="Center" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="15"></Label>
+                    <Label Text="Descripcion" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Nacho" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Refesco" FontFamily="OswaldRegular"></Label>
+                    <Label Text="L.60" FontFamily="OswaldRegular"></Label>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+        <Frame CornerRadius="20" BackgroundColor="White" Margin="0,8,0,0">
+            <StackLayout Orientation="Horizontal">
+                <!-- Botones de incremento y decremento -->
+                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                    <Image Source="nachos_palo" HorizontalOptions="CenterAndExpand" WidthRequest="100"></Image>
+                    <Label x:Name="snack2" Text="0" FontSize="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontFamily="OswaldRegular"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="mas1" Text="+"  Style="{StaticResource ButtonStyle}" Clicked="mas1_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                        <Button x:Name="menos1"  Text="-"  Style="{StaticResource ButtonStyle}" Clicked="menos1_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="StartAndExpand">
+                    <Label Text="Combo 1" HorizontalOptions="Center" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="15"></Label>
+                    <Label Text="Descripcion" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Nacho" FontFamily="OswaldRegular"></Label>
+                    <Label Text="2 Refesco" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Popcorns" FontFamily="OswaldRegular"></Label>
+                    <Label Text="L.140" FontFamily="OswaldRegular"></Label>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+        <Frame CornerRadius="20" BackgroundColor="White" Margin="0,8,0,0">
+            <StackLayout Orientation="Horizontal">
+                <!-- Botones de incremento y decremento -->
+                <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                    <Image Source="nachos_palo_hot" HorizontalOptions="CenterAndExpand" WidthRequest="100"></Image>
+                    <Label x:Name="snack3" Text="0" FontSize="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontFamily="OswaldRegular"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="mas2" Text="+"  Style="{StaticResource ButtonStyle}" Clicked="mas2_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                        <Button x:Name="menos2"  Text="-"  Style="{StaticResource ButtonStyle}" Clicked="menos2_Cliked" WidthRequest="30" HeightRequest="30" Padding="0"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="StartAndExpand">
+                    <Label Text="Combo 2" HorizontalOptions="Center" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="15"></Label>
+                    <Label Text="Descripcion" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Nacho" FontFamily="OswaldRegular"></Label>
+                    <Label Text="2 Refesco" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Popcorn" FontFamily="OswaldRegular"></Label>
+                    <Label Text="1 Perro caliente" FontFamily="OswaldRegular"></Label>
+                    <Label Text="L.180" FontFamily="OswaldRegular"></Label>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="1" Background="#0583fe" HeightRequest="50" Orientation="Horizontal" Margin="0,10,0,0">
+                <Image></Image>
+                <Image Source="iconocarro.png"></Image>
+                <Label x:Name="tot" Text="L.0" TextColor="White" FontSize="20" Padding="10"></Label>
+                <Button x:Name="Continuar" Text="Continuar" WidthRequest="100" HeightRequest="40" FontSize="15" Background="White" TextColor="#0583fe" FontFamily="OswaldRegular" Padding="5,0,0,5" HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Clicked="btncontinuar_click"></Button>
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+    </ScrollView >
+
+</ContentPage>
