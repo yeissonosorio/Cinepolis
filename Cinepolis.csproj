@@ -67,9 +67,11 @@
 	  <None Remove="Resources\Images\banner.webp" />
 	  <None Remove="Resources\Images\calendario.png" />
 	  <None Remove="Resources\Images\cine.svg" />
+	  <None Remove="Resources\Images\cinepolislogo.png" />
 	  <None Remove="Resources\Images\cinepolisps.jpg" />
 	  <None Remove="Resources\Images\cinepolistg.jpg" />
 	  <None Remove="Resources\Images\cinesc.png" />
+	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\historial.svg" />
 	  <None Remove="Resources\Images\iconoa.png" />
 	  <None Remove="Resources\Images\iconoac.png" />
@@ -82,8 +84,10 @@
 	  <None Remove="Resources\Images\nachos_palo.png" />
 	  <None Remove="Resources\Images\nachos_palo_hot.jpg" />
 	  <None Remove="Resources\Images\palomitas.png" />
+	  <None Remove="Resources\Images\passwordicon.png" />
 	  <None Remove="Resources\Images\poster.webp" />
 	  <None Remove="Resources\Images\ubicacion.png" />
+	  <None Remove="Resources\Images\usericon.png" />
 	  <None Remove="Resources\Splash\icon.png" />
 	</ItemGroup>
 
@@ -94,7 +98,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="snack.xaml">
+	  <MauiXaml Update="Views\password.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\login.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="reserva_acept.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\singup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\snack.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Historial.xaml">

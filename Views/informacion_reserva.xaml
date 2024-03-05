@@ -5,11 +5,13 @@
              Title="informacion_reserva" 
              Background="White">
 
+    
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <Label Text="Reserva" FontFamily="ProtestGuerrillaRegular" TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" HeightRequest="50" FontSize="30"  Margin="0,0,50,0"/>
         </HorizontalStackLayout>
     </Shell.TitleView>
+    <ScrollView>
     <VerticalStackLayout>
         <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10">
             <StackLayout Orientation="Vertical">
@@ -46,4 +48,5 @@
             </StackLayout>
         </Frame>
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

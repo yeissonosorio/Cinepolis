@@ -8,13 +8,14 @@
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
         }
 
         //Evento al precionar el icono de inicio Secion
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-            //le envia la un string a la siguiente pagina
-            //await Navigation.PushAsync(new Secion("Cine"));
+            
+            await Navigation.PushAsync(new login("cine"));
         }
 
         //Evento al precionar el frame de San Pedro Sula
@@ -52,7 +53,11 @@
             }
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            // Aquí no hacemos nada, evitando que el botón de retroceso tenga efecto
+            return true; // Indica que hemos manejado el evento nosotros mismos
+        }
 
     }
-
 }
