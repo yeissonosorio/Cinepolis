@@ -16,11 +16,7 @@ public partial class snack : ContentPage
 	{
 
 		InitializeComponent();
-
-        nomacientos = acientos;
-
-        DisplayAlert("pul", nomacientos[0] + "", "ok");
-
+        this.nomacientos = acientos;
         Shell.SetTabBarIsVisible(this, false);
 
     }
@@ -88,25 +84,21 @@ public partial class snack : ContentPage
         if (snack1.Text != "0")
         {
             sub[0] = count[0] * 60;
-            Clase.Producto pro = new Clase.Producto {id=1, cantidad = count[0], precio=60, sub = sub[0] };
+            Clase.Producto pro = new Clase.Producto {id=1, name = "Nachos", cantidad = count[0], precio=60, sub = sub[0] };
             listCombo.Add(pro);
         }
         if(snack2.Text != "0")
         {
             sub[1] = count[1] * 140;
-            Clase.Producto pro = new Clase.Producto { id = 2, cantidad = count[1], precio = 140, sub = sub[1] };
+            Clase.Producto pro = new Clase.Producto { id = 2, name = "Combo 1", cantidad = count[1], precio = 140, sub = sub[1] };
             listCombo.Add(pro);
         }
         if (snack3.Text != "0")
         {
             sub[2] = count[2] * 180;
-            Clase.Producto pro = new Clase.Producto { id = 3, cantidad = count[2], precio = 180, sub = sub[2] };
+            Clase.Producto pro = new Clase.Producto { id = 3,name="Combo 2" , cantidad = count[2], precio = 180, sub = sub[2] };
             listCombo.Add(pro);
         }
-
-       for(int i = 0;i< listCombo.Count; i++)
-        {
-            await DisplayAlert("Combos", "id: "+listCombo[i].id+" can" + listCombo[i].cantidad + "pre" + listCombo[i].precio + "sub" + listCombo[i].sub,"Ok");
-        }
+        await Navigation.PushAsync(new reserva_acept(listCombo,nomacientos));
     }
 }

@@ -9,7 +9,7 @@
         </HorizontalStackLayout>
     </Shell.TitleView>
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout x:Name="con">
             <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10">
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal" Padding="0,0,10,0" Margin="0">
@@ -30,9 +30,6 @@
                                 <Label Text="feb 16 2024 15:30" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                    <StackLayout Orientation="Vertical">
-                        
                     </StackLayout>
                 </StackLayout>
             </Frame>
