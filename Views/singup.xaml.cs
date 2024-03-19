@@ -1,3 +1,7 @@
+using Firebase.Auth;
+using Firebase.Auth.Providers;
+using System.Reflection;
+
 namespace Cinepolis;
 
 public partial class singup : ContentPage
@@ -14,7 +18,38 @@ public partial class singup : ContentPage
     {
         if (ver() == true)
         {
-            await Navigation.PushAsync(new login(op));
+            try
+            {
+               firebase con = new firebase();
+               string email = UsernameEntry.Text;
+               string pass = PasswordEntry.Text;
+                var userCredential = await con.CrearUsuario(email, pass);
+
+                var usuer = new models.usuario_cliente
+                {
+                    correo = email,
+                    estado = 0
+                };
+
+                if (userCredential != null)
+                {
+                    models.Msg msg = await controllers.controllercliente.CreateEmple(usuer);
+
+                    if (msg != null)
+                    {
+                        await DisplayAlert("Aviso", msg.message.ToString(), "OK");
+                    }
+                    await DisplayAlert("Success", "El usuario se registró correctamente. Se ha enviado un correo de verificación.", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Este correo ya existe", "OK");
+                }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Alert",ex.Message,"ok");
+            }
         }
     }
 

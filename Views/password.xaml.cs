@@ -12,6 +12,10 @@ public partial class password : ContentPage
     {
         if (ver()== true)
         {
+            firebase con = new firebase();
+            string email = UsernameEntry.Text;
+            con.enviar(email);
+            await DisplayAlert("Recuperar", "Se envio codigo de recuperacion", "Ok");
             await Navigation.PushAsync(new login(op));
         }  
     }

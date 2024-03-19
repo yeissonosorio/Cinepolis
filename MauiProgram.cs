@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Firebase.Auth;
+using Firebase.Auth.Providers;
+using Microsoft.Extensions.Logging;
 
 namespace Cinepolis
 {
@@ -6,6 +8,7 @@ namespace Cinepolis
     {
         public static MauiApp CreateMauiApp()
         {
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -17,6 +20,7 @@ namespace Cinepolis
                     fonts.AddFont("ProtestGuerrilla-Regular.ttf", "ProtestGuerrillaRegular");
                     fonts.AddFont("Oswald-Regular.ttf", "OswaldRegular");
                 });
+
 
 #if DEBUG
     		builder.Logging.AddDebug();

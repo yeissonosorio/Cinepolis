@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 
 
 namespace Cinepolis
@@ -7,10 +8,13 @@ namespace Cinepolis
     public partial class Sala_Reserva : ContentPage
     {
         int count = 0;
+        int a = 0;
         private List<string> nombresSeleccionados = new List<string>();
+        private List<string> aciento = new List<string>();
         public ObservableCollection<ElementoModel> Elementos { get; set; }
         private bool isLoaded = false;
 
+        public ObservableCollection<models.acientos> Posts { get; set; }
 
         public Sala_Reserva()
         {
@@ -29,41 +33,66 @@ namespace Cinepolis
 
             if (!isLoaded) // Verificar si los elementos ya se han cargado antes
             {
-                LoadData(); // Cargar datos
+                LoadDatas(); // Cargar datos
                 isLoaded = true; // Establecer que los elementos ya se han cargado
             }
         }
 
         private async void LoadData()
         {
-            await DisplayAlert("","Espere mientras cargan los hacientos precione ok", "OK");
-            for (int i = 0; i < 40; i++)
+            await DisplayAlert("", "Espere mientras cargan los asientos, presione OK", "OK");
+
+            int a = 0;
+            int totalSeats = 40; // Total de asientos a considerar
+
+            for (int i = 0; i < totalSeats; i++)
             {
+                string currentSeat = "";
+
                 if (i >= 0 && i <= 7)
                 {
-                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = "F" + (41 - (i + 1)) });
+                    currentSeat = "F" + (41 - (i + 1));
                 }
                 else if (i > 7 && i <= 15)
                 {
-                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = "D" + (41 - (i + 1)) });
+                    currentSeat = "D" + (41 - (i + 1));
                 }
                 else if (i > 15 && i <= 23)
                 {
-                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = "C"  + (41 - (i + 1)) });
+                    currentSeat = "C" + (41 - (i + 1));
                 }
                 else if (i > 23 && i <= 31)
                 {
-                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = "B" + (41 - (i + 1)) });
+                    currentSeat = "B" + (41 - (i + 1));
                 }
-                else if (i > 23 && i <= 39)
+                else if (i > 31 && i <= 39)
                 {
-                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = "A" + (41 - (i + 1)) });
+                    currentSeat = "A" + (41 - (i + 1));
+                }
+
+                // Comprueba si hay un elemento en 'aciento' y si coincide con el asiento actual
+                if (a < aciento.Count && aciento[a] == currentSeat)
+                {
+                    // Si coincide, agrega el asiento con el icono 'iconore.png'
+                    Elementos.Add(new ElementoModel { Icono = "iconore.png", Name = currentSeat });
+                    // Incrementa 'a' para comparar el siguiente elemento en 'aciento'
+                    a=a+1;
+                }
+                else
+                {
+                    // Si no coincide, agrega el asiento con el icono 'iconoa.png'
+                    Elementos.Add(new ElementoModel { Icono = "iconoa.png", Name = currentSeat });
                 }
             }
+
             activityIndicator.IsRunning = false;
             activityIndicator.IsVisible = false;
-            indi.IsVisible= false;
+            indi.IsVisible = false;
         }
+
+
+
+
 
         private async void Image_Tapped(object sender, EventArgs e)
         {
@@ -76,6 +105,11 @@ namespace Cinepolis
                 count += 60;
                 nombresSeleccionados.Add(nombre);
                 tot.Text = "L." + count;
+
+            }
+            else if(elementoModel.Icono == "iconore.png")
+            {
+                await DisplayAlert("Aviso", "Aciento Ocupado", "Ok");
 
             }
             else
@@ -92,6 +126,23 @@ namespace Cinepolis
             }
 
         }
+
+        public async void LoadDatas(){
+            var posts = await controllers.controlleraciento.GetPosts();
+            if (posts != null)
+            {
+                foreach (var post in posts)
+                {
+                    aciento.Add(post.aciento);
+                }
+                LoadData();
+            }
+            else
+            {
+
+            }
+        }
+
 
         public async void btncontinuar_click(object sender, EventArgs e)
         {
