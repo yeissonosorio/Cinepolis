@@ -37,7 +37,7 @@ public partial class singup : ContentPage
 
                     if (msg != null)
                     {
-                        await DisplayAlert("Aviso", msg.message.ToString(), "OK");
+                       
                     }
                     await DisplayAlert("Success", "El usuario se registró correctamente. Se ha enviado un correo de verificación.", "OK");
                 }

@@ -1,23 +1,30 @@
 
 
+using System.Collections.ObjectModel;
+
 namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
 {
 	List<Clase.Producto> productos;
     List<string> acientos;
+    public ObservableCollection<models.idreserva> Posts { get; set; }
     int totaacient=0;
     int totsnack = 0;
     int total = 0;
+    int idre = 0;
+    bool butom=false;
     public reserva_acept(List<Clase.Producto> snack,List<string>acient)
 	{
 		InitializeComponent();
 		this.productos = snack;
         this.acientos = acient;
+        Posts = new ObservableCollection<models.idreserva>();
         Shell.SetTabBarIsVisible(this, false);
         acien();
         carga();
         cagarbarra();
+        
     }
 
 	public void carga()
@@ -185,6 +192,115 @@ public partial class reserva_acept : ContentPage
         con.Children.Add(grid);
     }
     public async void btncontinuar_click(object sender, EventArgs e)
-    { 
+    {
+        if (butom == false)
+        {
+            butom = true;
+            var hisrese = new models.historial_reserva
+            {
+                id_usuario = 1,
+                fecha = "2024-03-01",
+                hora = "7:00pm",
+                total = total,
+                id_pelicula = 1
+            };
+            models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
+
+            if (msg != null)
+            {
+                await LoadData();
+            }
+        }
+
     }
+
+    public async Task LoadData()
+    {
+        try
+        {
+            var posts = await controllers.historialControllers.GetPosts("1");
+            if (posts != null)
+            {
+                // Limpiar la colección actual de Posts
+                Posts.Clear();
+
+                idre = posts.ultimo_id_historial;
+                await guardar(idre);
+                if (productos.Count != 0)
+                {
+                    await guardarsnck(idre);
+                }
+                else
+                {
+                    await DisplayAlert("", "Resevacion exitosa!!", "Ok");
+                    await Navigation.PushAsync(new MainPage());
+                }
+            }
+            else
+            {
+                // Manejar caso de posts nulos
+                
+            }
+        }
+        catch (Exception ex)
+        {
+            // Manejar otras excepciones
+            await DisplayAlert("Error", $"Error al cargar datos: {ex.Message}", "OK");
+        }
     }
+
+    public async Task guardar(int id)
+    {
+        for(int i=0; i<acientos.Count; i++)
+        {
+            var hisrese = new models.acientore
+            {
+                id_pelicula=1,
+                aciento= acientos[i],
+                ciudad="sps",
+                fecha = "2024-03-01",
+                hora = "7:00pm",
+                id_reserva = id
+            };
+            models.Msg msg = await controllers.controlleraciento.Createacien(hisrese);
+
+            if (msg != null)
+            {
+
+            }
+        }
+
+    }
+
+    public async Task guardarsnck(int id)
+    {
+        bool ms = false;
+        for (int i = 0; i <productos.Count; i++)
+        {
+            var snack = new models.snack
+            {
+                id_snack = productos[i].id,
+                cantiad = productos[i].cantidad,
+                precio = productos[i].precio,
+                total = productos[i].sub,
+                id_reserva = id
+            };
+            models.Msg msg = await controllers.historial_snackControllers.CreateHis(snack);
+
+            if (msg != null)
+            {
+                ms= true;
+            }
+            else
+            {
+                ms= false;
+            }
+        }
+
+        if (ms)
+        {
+            await DisplayAlert("", "Resevacion exitosa!!", "OK");
+            await Navigation.PushAsync(new MainPage());
+        }
+    }
+}

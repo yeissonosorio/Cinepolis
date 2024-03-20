@@ -1,55 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+
 namespace Cinepolis.controllers
 {
-    public class controlleraciento
+    public class historialControllers
     {
-        public async static Task<List<models.acientos>> GetPosts()
-        {
-            List<models.acientos>? posts = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    HttpResponseMessage responseMessage = await client.GetAsync("https://44ec-170-83-119-97.ngrok-free.app/api/acientos?id_pelicula=1&ciudad=sps&fecha=2024-03-01&hora=7:00pm");
-
-                    if (responseMessage.IsSuccessStatusCode)
-                    {
-                        var result = await responseMessage.Content.ReadAsStringAsync();
-                        posts = JsonConvert.DeserializeObject<List<models.acientos>>(result);
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-
-            }
-            catch (JsonException ex)
-            {
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return posts;
-        }
-        public async static Task<models.Msg> Createacien(models.acientore acientore)
+        public async static Task<models.Msg> CreateHis(models.historial_reserva _Reserva)
         {
             var msg = new models.Msg();
 
-            var JsonObject = JsonConvert.SerializeObject(acientore);
+            var JsonObject = JsonConvert.SerializeObject(_Reserva);
 
             System.Net.Http.StringContent stringContent = new StringContent(JsonObject, Encoding.UTF8,
                 "application/json");
@@ -59,7 +23,7 @@ namespace Cinepolis.controllers
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage responseMessage = null;
-                    responseMessage = await client.PostAsync("https://44ec-170-83-119-97.ngrok-free.app/api/acientos/store", stringContent);
+                    responseMessage = await client.PostAsync("https://44ec-170-83-119-97.ngrok-free.app/api/historial/store", stringContent);
 
                     if (responseMessage != null)
                     {
@@ -111,5 +75,43 @@ namespace Cinepolis.controllers
             }
 
         }
+
+        public async static Task<models.idreserva> GetPosts(string id)
+        {
+            models.idreserva post = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage responseMessage = await client.GetAsync("https://44ec-170-83-119-97.ngrok-free.app/api/historial/" + id+ "/ultimo_id");
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        var result = await responseMessage.Content.ReadAsStringAsync();
+                        post = JsonConvert.DeserializeObject<models.idreserva>(result);
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+
+            }
+            catch (JsonException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return post;
+        }
+
     }
 }

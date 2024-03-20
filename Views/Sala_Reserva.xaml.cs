@@ -73,10 +73,11 @@ namespace Cinepolis
                 // Comprueba si hay un elemento en 'aciento' y si coincide con el asiento actual
                 if (a < aciento.Count && aciento[a] == currentSeat)
                 {
+                    a = a + 1;
                     // Si coincide, agrega el asiento con el icono 'iconore.png'
                     Elementos.Add(new ElementoModel { Icono = "iconore.png", Name = currentSeat });
                     // Incrementa 'a' para comparar el siguiente elemento en 'aciento'
-                    a=a+1;
+                    
                 }
                 else
                 {
@@ -136,6 +137,7 @@ namespace Cinepolis
                     aciento.Add(post.aciento);
                 }
                 LoadData();
+
             }
             else
             {
@@ -146,14 +148,21 @@ namespace Cinepolis
 
         public async void btncontinuar_click(object sender, EventArgs e)
         {
-            bool result = await DisplayAlert("", "Desea agregar un snack a su reserva", "SI", "NO");
-            if (result)
+            if (nombresSeleccionados.Count==0)
             {
-                await Navigation.PushAsync(new snack(nombresSeleccionados));
+                await DisplayAlert("Aviso", "seleccione una silla", "OK");
             }
             else
             {
+                bool result = await DisplayAlert("", "Desea agregar un snack a su reserva", "SI", "NO");
+                if (result)
+                {
+                    await Navigation.PushAsync(new snack(nombresSeleccionados));
+                }
+                else
+                {
 
+                }
             }
         }
 
