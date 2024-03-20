@@ -1,7 +1,11 @@
 
 
 using System.Collections.ObjectModel;
-
+using QRCoder;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using MailKit.Security;
 namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
@@ -205,6 +209,47 @@ public partial class reserva_acept : ContentPage
                 id_pelicula = 1
             };
             models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
+
+            try
+            {
+                string Texto = $"Asientos: {string.Join(",", acientos.Select(a => a.ToString()))}\nSnacks: {string.Join(",", productos.Select(p => $"{p.cantidad} {p.name} - Precio: L.{p.precio} - Total: L.{p.sub}"))}\nTotal: L.{total}";
+                QRCodeGenerator qRCodeGenerator = new QRCodeGenerator();
+                QRCodeData qRCodeData = qRCodeGenerator.CreateQrCode(Texto, QRCodeGenerator.ECCLevel.L);
+                PngByteQRCode qRCode = new PngByteQRCode(qRCodeData);
+                byte[] qrCodeBytes = qRCode.GetGraphic(20);
+
+                MemoryStream qrStream = new MemoryStream(qrCodeBytes);
+
+                string servidor = "smtp.gmail.com";
+                int Puerto = 587;
+                string GmailUser = "emailcinepolis@gmail.com";
+                string GmailPass = "wdxirgcurnjfmxva";
+
+                MimeMessage mensaje = new MimeMessage();
+                mensaje.From.Add(new MailboxAddress("Pruebas", GmailUser));
+                mensaje.To.Add(new MailboxAddress("Destino", "cnombre982@gmail.com"));
+                mensaje.Subject = "Aquí está su código QR";
+
+                BodyBuilder CuerpoMensaje = new BodyBuilder();
+                CuerpoMensaje.TextBody = "Utiliza este código QR para completar el pago en tu Cinepolis más cercano";
+
+                CuerpoMensaje.Attachments.Add("codigo_qr.png", qrStream);
+
+                mensaje.Body = CuerpoMensaje.ToMessageBody();
+
+                using (SmtpClient ClienteSmtp = new SmtpClient())
+                {
+                    ClienteSmtp.CheckCertificateRevocation = false;
+                    await ClienteSmtp.ConnectAsync(servidor, Puerto, SecureSocketOptions.StartTls);
+                    await ClienteSmtp.AuthenticateAsync(GmailUser, GmailPass);
+                    await ClienteSmtp.SendAsync(mensaje);
+                    await ClienteSmtp.DisconnectAsync(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
 
             if (msg != null)
             {
