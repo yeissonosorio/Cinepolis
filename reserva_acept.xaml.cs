@@ -6,6 +6,11 @@ using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
 using MailKit.Security;
+using System.Net;
+using Cinepolis.models;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
+using Cinepolis.Views;
 namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
@@ -18,6 +23,8 @@ public partial class reserva_acept : ContentPage
     int total = 0;
     int idre = 0;
     bool butom=false;
+    public string datoRecibido { get; private set; }
+    public string totalString { get; private set; }
     public reserva_acept(List<Clase.Producto> snack,List<string>acient)
 	{
 		InitializeComponent();
@@ -30,8 +37,27 @@ public partial class reserva_acept : ContentPage
         cagarbarra();
         
     }
+    public reserva_acept()
+    {
+        this.InitializeComponent();
+    }
 
-	public void carga()
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (Navigation.ModalStack.LastOrDefault() is PaymenState paginaPago)
+        {
+            datoRecibido = paginaPago.Status;
+            if (datoRecibido == "COMPLETED")
+            {
+                await DisplayAlert("Compra exitosa!", "La compra fue exitosa. Gracias por su compra.", "OK");
+                await Navigation.PushAsync(new MainPage());
+            }
+        }
+    }
+
+
+    public void carga()
 	{
         if (productos.Count > 0)
         {
@@ -197,66 +223,77 @@ public partial class reserva_acept : ContentPage
     }
     public async void btncontinuar_click(object sender, EventArgs e)
     {
-        if (butom == false)
+
+        try
         {
-            butom = true;
-            var hisrese = new models.historial_reserva
+            double Total = total * 0.041;
+            totalString = Total.ToString("0.00", CultureInfo.InvariantCulture);
+            string url = "https://api-m.sandbox.paypal.com/v2/checkout/orders";
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Headers.Add("Authorization", "Basic QVVuTmV2OWYxc1pUc2hNNDcyNkhRRzREQ05Jems0S0N1WWhtUGpiOEJPQkh2U0FPd09GdEhyV0wtbG5QZUxyTUZOR3pnWmY3V29xdlVZRTg6RUU2b1ZoQzRzSHlGR2plZU04YjRIS1VFRXVPSUFBYTVRbnFxbjhWOGVZb0xDczFYbF84TjMzWGFoRks3MXJmTmZQZ1c2dERXWkdLRWczNHY=");
+            string jsonData = "{\"intent\": \"CAPTURE\", \"purchase_units\": [ { \"reference_id\": \"d9f80740-38f0-11e8-b467-0ed5f89f718b\", \"amount\": { \"currency_code\": \"USD\", \"value\": \"" + totalString + "\" } } ], \"payment_source\": { \"paypal\": { \"experience_context\": { \"payment_method_preference\": \"IMMEDIATE_PAYMENT_REQUIRED\", \"brand_name\": \"Cinepolis\", \"locale\": \"en-US\", \"landing_page\": \"LOGIN\", \"user_action\": \"PAY_NOW\", \"return_url\": \"https://kelwin.epizy.com/payment?totalString=" + totalString+"\" } } } }";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                id_usuario = 1,
-                fecha = "2024-03-01",
-                hora = "7:00pm",
-                total = total,
-                id_pelicula = 1
-            };
-            models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
-
-            try
-            {
-                string Texto = $"Asientos: {string.Join(",", acientos.Select(a => a.ToString()))}\nSnacks: {string.Join(",", productos.Select(p => $"{p.cantidad} {p.name} - Precio: L.{p.precio} - Total: L.{p.sub}"))}\nTotal: L.{total}";
-                QRCodeGenerator qRCodeGenerator = new QRCodeGenerator();
-                QRCodeData qRCodeData = qRCodeGenerator.CreateQrCode(Texto, QRCodeGenerator.ECCLevel.L);
-                PngByteQRCode qRCode = new PngByteQRCode(qRCodeData);
-                byte[] qrCodeBytes = qRCode.GetGraphic(20);
-
-                MemoryStream qrStream = new MemoryStream(qrCodeBytes);
-
-                string servidor = "smtp.gmail.com";
-                int Puerto = 587;
-                string GmailUser = "emailcinepolis@gmail.com";
-                string GmailPass = "wdxirgcurnjfmxva";
-
-                MimeMessage mensaje = new MimeMessage();
-                mensaje.From.Add(new MailboxAddress("Pruebas", GmailUser));
-                mensaje.To.Add(new MailboxAddress("Destino", "cnombre982@gmail.com"));
-                mensaje.Subject = "Aquí está su código QR";
-
-                BodyBuilder CuerpoMensaje = new BodyBuilder();
-                CuerpoMensaje.TextBody = "Utiliza este código QR para completar el pago en tu Cinepolis más cercano";
-
-                CuerpoMensaje.Attachments.Add("codigo_qr.png", qrStream);
-
-                mensaje.Body = CuerpoMensaje.ToMessageBody();
-
-                using (SmtpClient ClienteSmtp = new SmtpClient())
-                {
-                    ClienteSmtp.CheckCertificateRevocation = false;
-                    await ClienteSmtp.ConnectAsync(servidor, Puerto, SecureSocketOptions.StartTls);
-                    await ClienteSmtp.AuthenticateAsync(GmailUser, GmailPass);
-                    await ClienteSmtp.SendAsync(mensaje);
-                    await ClienteSmtp.DisconnectAsync(true);
-                }
+                streamWriter.Write(jsonData);
+                streamWriter.Flush();
+                streamWriter.Close();
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
-            }
+            string payerLink;
+            string selfLink;
 
-            if (msg != null)
+            HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                await LoadData();
+                var result = streamReader.ReadToEnd();
+                JObject jsonResult = JObject.Parse(result);
+                string payerActionLink = jsonResult["links"][1]["href"].ToString();
+                string selfActionLink = jsonResult["links"][0]["href"].ToString();
+
+                payerLink = payerActionLink;
+                selfLink = selfActionLink;
+                string Texto = "";
+                string txt = await EnviarQR(Texto);
+                await Navigation.PushModalAsync(new PaymenState(selfLink, txt, payerLink));
+
             }
         }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error de Paypal", ex.Message, "OK");
+        }
+    }
 
+    public async Task<string> EnviarQR(string Texto) {
+        Texto = $"Asientos: {string.Join(",", acientos)}\nSnacks: {string.Join(",", productos.Select(p => $"{p.cantidad} {p.name}"))}";
+        try
+        {  
+           
+            if (butom == false)
+            {
+                butom = true;
+                var hisrese = new models.historial_reserva
+                {
+                    id_usuario = 1,
+                    fecha = "2024-03-01",
+                    hora = "7:00pm",
+                    total = total,
+                    id_pelicula = 1
+                };
+                models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
+
+                if (msg != null)
+                {
+                    await LoadData();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+        return Texto;
     }
 
     public async Task LoadData()
