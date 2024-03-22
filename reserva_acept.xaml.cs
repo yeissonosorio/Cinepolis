@@ -1,16 +1,10 @@
 
 
-using System.Collections.ObjectModel;
-using QRCoder;
-using MailKit.Net.Smtp;
-using MailKit;
-using MimeKit;
-using MailKit.Security;
-using System.Net;
-using Cinepolis.models;
-using Newtonsoft.Json.Linq;
-using System.Globalization;
 using Cinepolis.Views;
+using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Net;
 namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
