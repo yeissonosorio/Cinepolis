@@ -1,7 +1,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
-
+using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace Cinepolis
 {
@@ -9,6 +10,10 @@ namespace Cinepolis
     {
         int count = 0;
         int a = 0;
+        int Id_pelicula = 1;
+        string Ciudad = "sps";
+        string Fecha = "2024-03-01";
+        string Hora = "7:00pm";
         private List<string> nombresSeleccionados = new List<string>();
         private List<string> aciento = new List<string>();
         public ObservableCollection<ElementoModel> Elementos { get; set; }
@@ -102,13 +107,39 @@ namespace Cinepolis
             var nombre = elementoModel.Name; // Obtén el nombre del elemento
             if (elementoModel.Icono == "iconoa.png")
             {
-                elementoModel.SetIcono("iconoac.png");
-                count += 60;
-                nombresSeleccionados.Add(nombre);
-                tot.Text = "L." + count;
 
+                FirebaseClient firebaseClient = new FirebaseClient("https://cinepolis-119be-default-rtdb.firebaseio.com/");
+                // Construye la clave del registro que deseas eliminar
+                string claveBusqueda = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}";
+
+                var registros = await firebaseClient
+                .Child("Reserva")
+                .OrderBy(nameof(models.reserva.clave))
+                .EqualTo(claveBusqueda)
+                .OnceAsync<models.reserva>();
+
+                // Verifica si se encontró el registro
+                if (registros.Count > 0)
+                {
+                    // La clave existe en la base de datos
+                    await DisplayAlert("Aviso", "La silla esta en Proceso de reserva", "Ok");
+                }
+                else
+                {
+                    elementoModel.SetIcono("iconoac.png");
+                    // La clave no existe en la base de datos
+                    Console.WriteLine("La clave no existe en la base de datos.");
+                    await firebaseClient.Child("Reserva").PostAsync(new models.reserva
+                    {
+                        clave = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}"
+                    }); ;
+
+                    count += 60;
+                    nombresSeleccionados.Add(nombre);
+                    tot.Text = "L." + count;
+                }
             }
-            else if(elementoModel.Icono == "iconore.png")
+            else if (elementoModel.Icono == "iconore.png")
             {
                 await DisplayAlert("Aviso", "Aciento Ocupado", "Ok");
 
@@ -119,6 +150,26 @@ namespace Cinepolis
                 count -= 60;
                 nombresSeleccionados.Remove(nombre);
                 tot.Text = "L." + count;
+                FirebaseClient firebaseClient = new FirebaseClient("https://cinepolis-119be-default-rtdb.firebaseio.com/");
+                // Construye la clave del registro que deseas eliminar
+                string claveBusqueda = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}";
+
+                var registros = await firebaseClient
+                .Child("Reserva")
+                .OrderBy(nameof(models.reserva.clave))
+                .EqualTo(claveBusqueda)
+                .OnceAsync<models.reserva>();
+
+                if (registros.Any())
+                {
+                    var claveRegistro = registros.First().Key;
+                    await firebaseClient.Child("Reserva").Child(claveRegistro).DeleteAsync();
+                }
+                else
+                {
+                    // Manejar el caso en que no se encontró el registro
+                }
+
             }
             LabelN.Text = string.Join(", ", nombresSeleccionados);
             if (LabelN.Text == "")

@@ -23,7 +23,7 @@ namespace Cinepolis.controllers
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage responseMessage = null;
-                    responseMessage = await client.PostAsync("https://44ec-170-83-119-97.ngrok-free.app/api/snack/store", stringContent);
+                    responseMessage = await client.PostAsync("https://0eac-170-83-119-109.ngrok-free.app/api/snack/store", stringContent);
 
                     if (responseMessage != null)
                     {
