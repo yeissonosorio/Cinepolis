@@ -9,5 +9,6 @@ namespace Cinepolis.models
     public class reserva
     {
         public string clave { get; set; }
+        public long FechaHoraCreacionTimestamp { get; set; }
     }
 }

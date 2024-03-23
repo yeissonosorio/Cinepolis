@@ -37,8 +37,16 @@ namespace Cinepolis
         {
             var cliente = ConectarFirebase();
             var userCredential = await cliente.SignInWithEmailAndPasswordAsync(Email, Password);
-
-            return userCredential;
+            var user = userCredential.User.Info.IsEmailVerified;
+            if (user)
+            {
+                return userCredential;
+            }
+            else
+            {
+                return null;   
+            }
+            
         }
         public async Task<UserCredential> CrearUsuario(string Email, string Password)
         {

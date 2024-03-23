@@ -36,6 +36,10 @@ public partial class login : ContentPage
                 {
                    await LoadData(email);       
                 }
+                else
+                {
+                    await DisplayAlert("Aviso", "Verifique su correo", "Ok");
+                }
             }catch(Exception ex)
             {
                 await DisplayAlert("Error", "Correo o contraseña no valido", "ok");

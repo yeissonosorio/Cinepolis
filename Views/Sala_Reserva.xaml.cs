@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using Firebase.Database;
 using Firebase.Database.Query;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Cinepolis
 {
@@ -14,8 +15,10 @@ namespace Cinepolis
         string Ciudad = "sps";
         string Fecha = "2024-03-01";
         string Hora = "7:00pm";
+        string imagen;
         private List<string> nombresSeleccionados = new List<string>();
         private List<string> aciento = new List<string>();
+        List<Clase.Producto> pro = new List<Clase.Producto>();
         public ObservableCollection<ElementoModel> Elementos { get; set; }
         private bool isLoaded = false;
 
@@ -32,7 +35,7 @@ namespace Cinepolis
             BindingContext = this;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -40,6 +43,7 @@ namespace Cinepolis
             {
                 LoadDatas(); // Cargar datos
                 isLoaded = true; // Establecer que los elementos ya se han cargado
+                await VerificarYEliminarRegistrosAntiguos();
             }
         }
 
@@ -126,12 +130,15 @@ namespace Cinepolis
                 }
                 else
                 {
+                    DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                    long timestamp = (long)(DateTime.UtcNow - epochStart).TotalMilliseconds;
                     elementoModel.SetIcono("iconoac.png");
                     // La clave no existe en la base de datos
                     Console.WriteLine("La clave no existe en la base de datos.");
                     await firebaseClient.Child("Reserva").PostAsync(new models.reserva
                     {
-                        clave = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}"
+                        clave = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}",
+                        FechaHoraCreacionTimestamp = timestamp
                     }); ;
 
                     count += 60;
@@ -192,7 +199,7 @@ namespace Cinepolis
             }
             else
             {
-
+                LoadData();
             }
         }
 
@@ -212,7 +219,7 @@ namespace Cinepolis
                 }
                 else
                 {
-
+                    await Navigation.PushAsync(new reserva_acept(pro,nombresSeleccionados));
                 }
             }
         }
@@ -246,6 +253,34 @@ namespace Cinepolis
             public void SetIcono(string nuevoIcono)
             {
                 Icono = nuevoIcono;
+            }
+        }
+
+        private async Task VerificarYEliminarRegistrosAntiguos()
+        {
+            try
+            {
+                FirebaseClient firebaseClient = new FirebaseClient("https://cinepolis-119be-default-rtdb.firebaseio.com/");
+                DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime horaLimite = DateTime.UtcNow - TimeSpan.FromMinutes(10); // Se establece la hora límite para eliminar registros antiguos
+                long horaLimiteTimestamp = (long)(horaLimite - epochStart).TotalMilliseconds; // Utiliza la hora límite para calcular el timestamp
+
+                var registrosAntiguos = await firebaseClient
+                    .Child("Reserva")
+                    .OrderBy(nameof(models.reserva.FechaHoraCreacionTimestamp))
+                    .EndAt(horaLimiteTimestamp) // Filtra los registros con marca de tiempo menor o igual a horaLimiteTimestamp
+                    .OnceAsync<models.reserva>();
+
+                // Muestra los registros antiguos con marca de tiempo menor que horaLimiteTimestamp
+                foreach (var registro in registrosAntiguos)
+                {
+                    await firebaseClient.Child("Reserva").Child(registro.Key).DeleteAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción que pueda ocurrir
+                Console.WriteLine("Error al verificar y eliminar registros antiguos: " + ex.Message);
             }
         }
     }

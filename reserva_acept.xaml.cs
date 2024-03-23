@@ -9,7 +9,12 @@ namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
 {
-	List<Clase.Producto> productos;
+    int Id_pelicula = 1;
+    string Ciudad = "sps";
+    string Fecha = "2024-03-01";
+    string Hora = "7:00pm";
+    string imagen;
+    List<Clase.Producto> productos;
     List<string> acientos;
     public ObservableCollection<models.idreserva> Posts { get; set; }
     int totaacient=0;
@@ -98,6 +103,7 @@ public partial class reserva_acept : ContentPage
 
     public void acien()
     {
+            
             Frame nuevoframe = new Frame
             {
                 CornerRadius = 10,
@@ -169,15 +175,24 @@ public partial class reserva_acept : ContentPage
         grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
         grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-        // Crear el StackLayout en la segunda fila del Grid
-        StackLayout stackLayout = new StackLayout
+            int margin;
+            if (productos.Count > 0)
+            { 
+                margin = 10;
+            }
+            else
+            {
+                margin = 70;
+            }
+
+            // Crear el StackLayout en la segunda fila del Grid
+            StackLayout stackLayout = new StackLayout
         {
             BackgroundColor = Color.FromHex("#0583fe"),
             HeightRequest = 50,
             Orientation = StackOrientation.Horizontal,
-            Margin = new Thickness(0, 10, 0, 0)
+            Margin = new Thickness(10, margin, 10, 0)
         };
-
         // Crear los elementos dentro del StackLayout
         Image image1 = new Image();
         Image image2 = new Image { Source = "iconocarro.png" };

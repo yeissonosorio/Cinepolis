@@ -9,9 +9,13 @@ public partial class snack : ContentPage
     int[] count = {0,0,0};
     int total = 0;
     int[] sub = {0,0,0};
-    
+
     List<string> nomacientos;
-    
+    int Id_pelicula = 1;
+    string Ciudad = "sps";
+    string Fecha = "2024-03-01";
+    string Hora = "7:00pm";
+    string imagen;
     public snack(List<string> acientos)
 	{
 
