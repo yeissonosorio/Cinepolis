@@ -2,8 +2,8 @@ namespace Cinepolis;
 
 public partial class password : ContentPage
 {
-	string op;
-	public password(string Op)
+	
+	public password()
 	{
 		InitializeComponent();
         Shell.SetTabBarIsVisible(this, false);
@@ -16,7 +16,7 @@ public partial class password : ContentPage
             string email = UsernameEntry.Text;
             con.enviar(email);
             await DisplayAlert("Recuperar", "Se envio codigo de recuperacion", "Ok");
-            await Navigation.PushAsync(new login(op));
+            await Navigation.PushAsync(new login());
         }  
     }
     public Boolean ver()

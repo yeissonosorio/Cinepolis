@@ -6,13 +6,13 @@ namespace Cinepolis;
 
 public partial class singup : ContentPage
 {
-    string op;
-    public singup(string Op)
+    
+    public singup()
     {
         InitializeComponent();
         Shell.SetTabBarIsVisible(this, false);
         
-        op = Op;
+       
     }
     public async void btnlogin_Clicked(object sender, EventArgs e)
     {
@@ -48,7 +48,7 @@ public partial class singup : ContentPage
             }
             catch(Exception ex)
             {
-                await DisplayAlert("Alert",ex.Message,"ok");
+                await DisplayAlert("Error", "Este correo ya existe", "OK");
             }
         }
     }
@@ -79,7 +79,14 @@ public partial class singup : ContentPage
             if (CorreoEntry.Text == PasswordEntry.Text)
             {
 
-                return true;
+                if(CorreoEntry.Text.Length >= 6) {
+                    return true;
+                }
+                else
+                {
+                    DisplayAlert("Aviso", "Contraseña debe ser mayor o igual a 6 caracteres ", "ok");
+                    return false;
+                }
             }
             else
             {

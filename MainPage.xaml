@@ -18,7 +18,7 @@
     </Shell.TitleView>
     <!-- Para el login-->
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="iconos.png" Clicked="ToolbarItem_Clicked" />
+        <ToolbarItem x:Name="Log"  Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>

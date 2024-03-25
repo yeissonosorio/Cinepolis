@@ -3,22 +3,21 @@ namespace Cinepolis;
 
 public partial class login : ContentPage
 {
-    string Op;
+    
     public ObservableCollection<models.usuario_cliente> Posts { get; set; }
-    public login(string op)
+    public login()
     {
         InitializeComponent();
         Posts = new ObservableCollection<models.usuario_cliente>();
        
         Shell.SetTabBarIsVisible(this, false);
-        Op = op;
         
     }
 
     public async void btnsingup_Clicked(object sender, EventArgs e)
     {
 
-        await Navigation.PushAsync(new singup(Op));
+        await Navigation.PushAsync(new singup());
 
     }
     public async void btnlogin_Clicked(object sender, EventArgs e)
@@ -34,7 +33,8 @@ public partial class login : ContentPage
 
                 if (userCredential != null)
                 {
-                   await LoadData(email);       
+                   
+                    await LoadData(email);       
                 }
                 else
                 {
@@ -48,7 +48,7 @@ public partial class login : ContentPage
     }
     private async void Label_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new password(Op));
+        await Navigation.PushAsync(new password());
     }
 
     public Boolean ver()
@@ -79,22 +79,17 @@ public partial class login : ContentPage
         try
         {
             var posts = await controllers.controllercliente.GetPosts(correo);
+
             if (posts != null)
             {
-                // Limpiar la colección actual de Posts
+                Preferences.Set("Id",posts.id);
+                Preferences.Set("correo", posts.correo);
                 Posts.Clear();
 
                 await DisplayAlert("Bienvenido", "" + posts.correo, "Ok");
 
-                // Redirigir a la siguiente página según el valor de Op
-                if (Op == "cine")
-                {
-                    await Navigation.PushAsync(new MainPage());
-                }
-                else
-                {
-                    await Navigation.PushAsync(new Historial());
-                }
+                await Navigation.PushAsync(new MainPage());
+                
             }
             else
             {

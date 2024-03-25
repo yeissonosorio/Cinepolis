@@ -86,6 +86,7 @@
 	  <None Remove="Resources\Images\palomitas.png" />
 	  <None Remove="Resources\Images\passwordicon.png" />
 	  <None Remove="Resources\Images\poster.webp" />
+	  <None Remove="Resources\Images\salir.png" />
 	  <None Remove="Resources\Images\ubicacion.png" />
 	  <None Remove="Resources\Images\usericon.png" />
 	  <None Remove="Resources\Splash\icon.png" />

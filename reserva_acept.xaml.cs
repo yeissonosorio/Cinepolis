@@ -284,7 +284,7 @@ public partial class reserva_acept : ContentPage
                 butom = true;
                 var hisrese = new models.historial_reserva
                 {
-                    id_usuario = 1,
+                    id_usuario = Preferences.Get("Id", 0),
                     fecha = "2024-03-01",
                     hora = "7:00pm",
                     total = total,

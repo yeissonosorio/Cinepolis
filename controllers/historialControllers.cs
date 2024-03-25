@@ -113,5 +113,41 @@ namespace Cinepolis.controllers
             return post;
         }
 
+        public async static Task<List<models.historialReservacion>> Historial(int id)
+        {
+            List<models.historialReservacion>? posts = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage responseMessage = await client.GetAsync("https://d714-170-83-119-97.ngrok-free.app/api/historial/" + id);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        var result = await responseMessage.Content.ReadAsStringAsync();
+                        posts = JsonConvert.DeserializeObject<List<models.historialReservacion>>(result);
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+
+            }
+            catch (JsonException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return posts;
+        }
     }
 }

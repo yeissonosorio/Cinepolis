@@ -9,47 +9,81 @@
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            if(Preferences.Get("correo", "") == "")
+            {
+                Log.IconImageSource = ImageSource.FromFile("iconos.png");
+            }
+            else
+            {
+                Log.IconImageSource = ImageSource.FromFile("salir.png");
+            }
         }
 
         //Evento al precionar el icono de inicio Secion
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
+            if (Preferences.Get("correo", "") == "")
+            {
+                await Navigation.PushAsync(new login());
+            }
+            else
+            {
+                Preferences.Set("Id", 0);
+                Preferences.Set("correo", "");
+                await DisplayAlert("", "Cerrando seción", "Ok");
+                Log.IconImageSource = ImageSource.FromFile("iconos.png");
+                await Navigation.PopToRootAsync();
+            }
             
-            await Navigation.PushAsync(new login("cine"));
         }
 
         //Evento al precionar el frame de San Pedro Sula
         private async void SPS(object sender, EventArgs e)
         {
-            if (frameEnabled)
+            string correo = Preferences.Get("correo", "");
+            if (correo != "")
             {
-                // Desactivar el Frame para evitar clics múltiples
-                frameEnabled = false;
+                if (frameEnabled)
+                {
+                    // Desactivar el Frame para evitar clics múltiples
+                    frameEnabled = false;
 
-                // Aquí puedes implementar la navegación a otra página
-                await Navigation.PushAsync(new informacion_reserva());
+                    // Aquí puedes implementar la navegación a otra página
+                    await Navigation.PushAsync(new informacion_reserva());
 
-
-                // Habilitar el Frame después de un retraso
-                await Task.Delay(1000); // Cambia este valor 
-                frameEnabled = true;
+                    // Habilitar el Frame después de un retraso
+                    await Task.Delay(1000); // Cambia este valor 
+                    frameEnabled = true;
+                }
+            }
+            else
+            {
+                await DisplayAlert("","Debe iniciar seción","Ok");
             }
         }
 
         //Evento al precionar el frame de tegucigalpa
         private async void TGU(object sender, EventArgs e)
         {
-            if (frameEnabled1)
+            string correo = Preferences.Get("correo", "");
+            if (correo != "")
             {
-                // Desactivar el Frame para evitar clics múltiples
-                frameEnabled1 = false;
+                if (frameEnabled1)
+                {
+                    // Desactivar el Frame para evitar clics múltiples
+                    frameEnabled1 = false;
 
-                // Aquí puedes implementar la navegación a otra página
-                await Navigation.PushAsync(new Sala_Reserva());
+                    // Aquí puedes implementar la navegación a otra página
+                    await Navigation.PushAsync(new Sala_Reserva());
 
-                // Habilitar el Frame después de un retraso
-                await Task.Delay(1000); // Cambia este valor 
-                frameEnabled1 = true;
+                    // Habilitar el Frame después de un retraso
+                    await Task.Delay(1000); // Cambia este valor 
+                    frameEnabled1 = true;
+                }
+            }
+            else
+            {
+                await DisplayAlert("", "Debe iniciar seción", "Ok");
             }
         }
 
