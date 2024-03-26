@@ -13,38 +13,34 @@
     </Shell.TitleView>
     <ScrollView>
     <VerticalStackLayout>
-        <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10">
+        <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10" x:Name="frame">
             <StackLayout Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" Padding="0,0,10,0" Margin="0">
                     <StackLayout>
-                        <Image Source="https://imgc.allpostersimages.com/img/posters/five-nights-at-freddy-s-movie-teaser-one-sheet_u-L-FAC0H00.jpg" WidthRequest="100"></Image>
+                        <Image x:Name="imag"  WidthRequest="100"></Image>
                     </StackLayout>
                     <StackLayout Margin="10">
                         <StackLayout Orientation="Horizontal">
                             <Image Source="iconopeli.png" WidthRequest="30"></Image>
-                            <Label Text="MADAME WEB" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                                <Label x:Name="nom" Text="" FontFamily="OswaldRegular" FontSize="14" TextColor="Black" Padding="5"></Label>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Image Source="ubicacion.png" WidthRequest="30"></Image>
-                            <Label Text="San Pedro sula" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                            <Label x:Name="ub" Text="" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Image Source="calendario.png" WidthRequest="30"></Image>
-                            <Label Text="feb 16 2024 15:30" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                            <Label x:Name="fecha" Text="" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical" x:Name="conte">
                     <Label Text="Descripción" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="Sala: #1" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="Cantidad de Entradas: 6" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="Total de entradas: L.600" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="Snack inclidos" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="3 combo #1 total L.150 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="1 combo #2 total L.75 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="3 combo #3 total L.200 " FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                    <Label Text="Total a pagar: L.1025" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
-                </StackLayout>
+                    <Label x:Name="sal" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label x:Name="canti" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label x:Name="totbol" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    
+                    </StackLayout>
             </StackLayout>
         </Frame>
     </VerticalStackLayout>

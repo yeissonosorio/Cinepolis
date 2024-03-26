@@ -18,7 +18,7 @@ namespace Cinepolis.controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage responseMessage = await client.GetAsync("https://1c5a-170-83-119-109.ngrok-free.app/api/usuarios/" + correo);
+                    HttpResponseMessage responseMessage = await client.GetAsync("https://b6a2-170-83-119-109.ngrok-free.app/api/usuarios/" + correo);
 
                     if (responseMessage.IsSuccessStatusCode)
                     {
@@ -61,7 +61,7 @@ namespace Cinepolis.controllers
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage responseMessage = null;
-                    responseMessage = await client.PostAsync("https://8696-170-83-119-111.ngrok-free.app/api/usuarios/store", stringContent);
+                    responseMessage = await client.PostAsync("https://b6a2-170-83-119-109.ngrok-free.app/api/usuarios/store", stringContent);
 
                     if (responseMessage != null)
                     {

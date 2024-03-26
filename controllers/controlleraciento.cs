@@ -17,7 +17,7 @@ namespace Cinepolis.controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage responseMessage = await client.GetAsync("https://0eac-170-83-119-109.ngrok-free.app/api/acientos?id_pelicula=1&ciudad=sps&fecha=2024-03-01&hora=7:00pm");
+                    HttpResponseMessage responseMessage = await client.GetAsync("https://b6a2-170-83-119-109.ngrok-free.app/api/acientos?id_pelicula=1&ciudad=San+Pedro+Sula&fecha=2024-03-01&hora=7:00pm");
 
                     if (responseMessage.IsSuccessStatusCode)
                     {
@@ -59,7 +59,7 @@ namespace Cinepolis.controllers
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage responseMessage = null;
-                    responseMessage = await client.PostAsync("https://0eac-170-83-119-109.ngrok-free.app/api/acientos/store", stringContent);
+                    responseMessage = await client.PostAsync("https://b6a2-170-83-119-109.ngrok-free.app/api/acientos/store", stringContent);
 
                     if (responseMessage != null)
                     {

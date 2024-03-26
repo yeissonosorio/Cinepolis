@@ -63,7 +63,10 @@ public partial class Historial : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is models.historialReservacion selectedReservation)
         {
-            await DisplayAlert("ID del elemento seleccionado", $"El ID es: {selectedReservation.id}", "OK");
+            
+            string fecha = selectedReservation.fecha+" "+selectedReservation.hora;
+            await Navigation.PushAsync(new informacion_reserva(selectedReservation.imagen_pelicula,selectedReservation.nombre_pelicula,fecha,selectedReservation.nombre_sala,
+                selectedReservation.id,selectedReservation.total));
         }
     }
 

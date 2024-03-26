@@ -49,7 +49,7 @@
                     frameEnabled = false;
 
                     // Aquí puedes implementar la navegación a otra página
-                    await Navigation.PushAsync(new informacion_reserva());
+                    
 
                     // Habilitar el Frame después de un retraso
                     await Task.Delay(1000); // Cambia este valor 

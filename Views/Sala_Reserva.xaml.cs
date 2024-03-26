@@ -130,6 +130,10 @@ namespace Cinepolis
                 }
                 else
                 {
+                    count += 60;
+                    nombresSeleccionados.Add(nombre);
+                    tot.Text = "L." + count;
+                    LabelN.Text = string.Join(", ", nombresSeleccionados);
                     DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                     long timestamp = (long)(DateTime.UtcNow - epochStart).TotalMilliseconds;
                     elementoModel.SetIcono("iconoac.png");
@@ -141,9 +145,6 @@ namespace Cinepolis
                         FechaHoraCreacionTimestamp = timestamp
                     }); ;
 
-                    count += 60;
-                    nombresSeleccionados.Add(nombre);
-                    tot.Text = "L." + count;
                 }
             }
             else if (elementoModel.Icono == "iconore.png")
@@ -157,6 +158,11 @@ namespace Cinepolis
                 count -= 60;
                 nombresSeleccionados.Remove(nombre);
                 tot.Text = "L." + count;
+               
+                if (LabelN.Text =="")
+                {
+                    LabelN.Text = "No hay sillas seleccionadas";
+                }
                 FirebaseClient firebaseClient = new FirebaseClient("https://cinepolis-119be-default-rtdb.firebaseio.com/");
                 // Construye la clave del registro que deseas eliminar
                 string claveBusqueda = $"{Id_pelicula}-{nombre}-{Ciudad}-{Fecha}-{Hora}";
@@ -171,17 +177,12 @@ namespace Cinepolis
                 {
                     var claveRegistro = registros.First().Key;
                     await firebaseClient.Child("Reserva").Child(claveRegistro).DeleteAsync();
+                    LabelN.Text = string.Join(", ", nombresSeleccionados);
                 }
                 else
                 {
                     // Manejar el caso en que no se encontró el registro
                 }
-
-            }
-            LabelN.Text = string.Join(", ", nombresSeleccionados);
-            if (LabelN.Text == "")
-            {
-                LabelN.Text = "No hay sillas seleccionadas";
             }
 
         }
