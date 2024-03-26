@@ -9,8 +9,8 @@ namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
 {
-    int Id_pelicula = 1;
-    string Ciudad = "sps";
+    int Id_pelicula = 2;
+    string Ciudad = "San Pedro Sula";
     string Fecha = "2024-03-01";
     string Hora = "7:00pm";
     string imagen;
@@ -51,6 +51,32 @@ public partial class reserva_acept : ContentPage
             {
                 await DisplayAlert("Compra exitosa!", "La compra fue exitosa. Gracias por su compra.", "OK");
                 await Navigation.PushAsync(new MainPage());
+                try
+                {
+
+                    if (butom == false)
+                    {
+                        butom = true;
+                        var hisrese = new models.historial_reserva
+                        {
+                            id_usuario = Preferences.Get("Id", 0),
+                            fecha = "2024-03-01",
+                            hora = "7:00pm",
+                            total = total,
+                            id_pelicula = Id_pelicula
+                        };
+                        models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
+
+                        if (msg != null)
+                        {
+                            await LoadData();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error", ex.Message, "OK");
+                }
             }
         }
     }
@@ -276,32 +302,7 @@ public partial class reserva_acept : ContentPage
 
     public async Task<string> EnviarQR(string Texto) {
         Texto = $"Asientos: {string.Join(",", acientos)}\nSnacks: {string.Join(",", productos.Select(p => $"{p.cantidad} {p.name}"))}";
-        try
-        {  
-           
-            if (butom == false)
-            {
-                butom = true;
-                var hisrese = new models.historial_reserva
-                {
-                    id_usuario = Preferences.Get("Id", 0),
-                    fecha = "2024-03-01",
-                    hora = "7:00pm",
-                    total = total,
-                    id_pelicula = 1
-                };
-                models.Msg msg = await controllers.historialControllers.CreateHis(hisrese);
-
-                if (msg != null)
-                {
-                    await LoadData();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", ex.Message, "OK");
-        }
+        
         return Texto;
     }
 
@@ -323,7 +324,7 @@ public partial class reserva_acept : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("", "Resevacion exitosa!!", "Ok");
+                    
                     await Navigation.PushAsync(new MainPage());
                 }
             }
@@ -346,9 +347,9 @@ public partial class reserva_acept : ContentPage
         {
             var hisrese = new models.acientore
             {
-                id_pelicula=1,
+                id_pelicula= Id_pelicula,
                 aciento= acientos[i],
-                ciudad="sps",
+                ciudad=Ciudad,
                 fecha = "2024-03-01",
                 hora = "7:00pm",
                 id_reserva = id
@@ -390,8 +391,8 @@ public partial class reserva_acept : ContentPage
 
         if (ms)
         {
-            await DisplayAlert("", "Resevacion exitosa!!", "OK");
-            await Navigation.PushAsync(new MainPage());
+            
+            
         }
     }
 }

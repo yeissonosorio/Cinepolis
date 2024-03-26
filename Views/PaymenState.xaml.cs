@@ -60,7 +60,7 @@ public partial class PaymenState : ContentPage
 
                         MimeMessage mensaje = new MimeMessage();
                         mensaje.From.Add(new MailboxAddress("Pruebas", GmailUser));
-                        mensaje.To.Add(new MailboxAddress("Destino", user.correo));
+                        mensaje.To.Add(new MailboxAddress("Destino", Preferences.Get("correo", "")));
                         mensaje.Subject = "Aquí está su código QR";
 
                         BodyBuilder CuerpoMensaje = new BodyBuilder();
