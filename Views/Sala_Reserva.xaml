@@ -19,20 +19,20 @@
     Spacing="25">
             <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
                 <StackLayout>
-                    <Image Source="poster.webp" WidthRequest="100"></Image>
+                    <Image x:Name="poster" WidthRequest="100"></Image>
                 </StackLayout>
                 <StackLayout Margin="10">
                     <StackLayout Orientation="Horizontal">
                         <Image Source="iconopeli.png" WidthRequest="30"></Image>
-                        <Label Text="MADAME WEB" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                        <Label x:Name="nom" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Image Source="ubicacion.png" WidthRequest="30"></Image>
-                        <Label Text="San Pedro sula" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        <Label x:Name="ubi" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Image Source="calendario.png" WidthRequest="30"></Image>
-                        <Label Text="feb 16 2024 15:30" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        <Label x:Name="calendario" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

@@ -1,8 +1,14 @@
-﻿namespace Cinepolis
+﻿using Android.App;
+using Android.OS;
+using Plugin.LocalNotification;
+using System.Reactive;
+
+namespace Cinepolis
 {
     public partial class MainPage : ContentPage
     {
         private bool frameEnabled = true;
+        int cont = 1;
         private bool frameEnabled1 = true;
 
         public MainPage()
@@ -18,6 +24,8 @@
                 Log.IconImageSource = ImageSource.FromFile("salir.png");
             }
         }
+
+        
 
         //Evento al precionar el icono de inicio Secion
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
@@ -49,8 +57,7 @@
                     frameEnabled = false;
 
                     // Aquí puedes implementar la navegación a otra página
-                    
-
+                    await Navigation.PushAsync(new Cartelera("San Pedro Sula"));
                     // Habilitar el Frame después de un retraso
                     await Task.Delay(1000); // Cambia este valor 
                     frameEnabled = true;
@@ -74,7 +81,7 @@
                     frameEnabled1 = false;
 
                     // Aquí puedes implementar la navegación a otra página
-                    await Navigation.PushAsync(new Sala_Reserva());
+                    await Navigation.PushAsync(new Cartelera("Tegucigalpa"));
 
                     // Habilitar el Frame después de un retraso
                     await Task.Delay(1000); // Cambia este valor 

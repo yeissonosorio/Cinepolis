@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinepolis.Historial"
              Title=""
+             xmlns:converters="clr-namespace:Cinepolis.Converters"
              Background="White">
-    <!-- Para que no aparesca el boton de regresar-->
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+    </ContentPage.Resources>
+    
+        <!-- Para que no aparesca el boton de regresar-->
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
     </Shell.BackButtonBehavior>
@@ -31,7 +36,7 @@
                             <Frame BackgroundColor="White" Padding="5" CornerRadius="10" Margin="5" InputTransparent="True">
                         <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
                             <StackLayout>
-                                <Image Source="{Binding imagen_pelicula}" WidthRequest="100"></Image>
+                                 <Image Source="{Binding imagen_pelicula , Converter={StaticResource ByteArrayToImageSourceConverter}}" WidthRequest="100"></Image>
                             </StackLayout>
                             <StackLayout Margin="10">
                                 <StackLayout Orientation="Horizontal">

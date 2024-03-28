@@ -5,14 +5,15 @@ using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Net;
+using Plugin.LocalNotification;
 namespace Cinepolis;
 
 public partial class reserva_acept : ContentPage
 {
-    int Id_pelicula = 2;
-    string Ciudad = "San Pedro Sula";
-    string Fecha = "2024-03-01";
-    string Hora = "7:00pm";
+    int Id_pelicula ;
+    string Ciudad;
+    string Fecha;
+    string Hora;
     string imagen;
     List<Clase.Producto> productos;
     List<string> acientos;
@@ -24,13 +25,18 @@ public partial class reserva_acept : ContentPage
     bool butom=false;
     public string datoRecibido { get; private set; }
     public string totalString { get; private set; }
-    public reserva_acept(List<Clase.Producto> snack,List<string>acient)
+    public reserva_acept(List<Clase.Producto> snack,List<string>acient,int pel,string ciu,string fech,string hor,string ima)
 	{
 		InitializeComponent();
 		this.productos = snack;
         this.acientos = acient;
         Posts = new ObservableCollection<models.idreserva>();
         Shell.SetTabBarIsVisible(this, false);
+        Id_pelicula = pel;
+        Ciudad = ciu;
+        Fecha = fech;
+        Hora = "8:00pm";
+        imagen = ima;
         acien();
         carga();
         cagarbarra();
@@ -49,8 +55,7 @@ public partial class reserva_acept : ContentPage
             datoRecibido = paginaPago.Status;
             if (datoRecibido == "COMPLETED")
             {
-                await DisplayAlert("Compra exitosa!", "La compra fue exitosa. Gracias por su compra.", "OK");
-                await Navigation.PushAsync(new MainPage());
+                
                 try
                 {
 
@@ -60,8 +65,8 @@ public partial class reserva_acept : ContentPage
                         var hisrese = new models.historial_reserva
                         {
                             id_usuario = Preferences.Get("Id", 0),
-                            fecha = "2024-03-01",
-                            hora = "7:00pm",
+                            fecha = Fecha,
+                            hora = Hora,
                             total = total,
                             id_pelicula = Id_pelicula
                         };
@@ -72,6 +77,7 @@ public partial class reserva_acept : ContentPage
                             await LoadData();
                         }
                     }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -321,10 +327,14 @@ public partial class reserva_acept : ContentPage
                 if (productos.Count != 0)
                 {
                     await guardarsnck(idre);
+                    notificacion();
+                    await DisplayAlert("Compra exitosa!", "La compra fue exitosa. Gracias por su compra.", "OK");
+                    await Navigation.PushAsync(new MainPage());
                 }
                 else
                 {
-                    
+                    notificacion();
+                    await DisplayAlert("Compra exitosa!", "La compra fue exitosa. Gracias por su compra.", "OK");
                     await Navigation.PushAsync(new MainPage());
                 }
             }
@@ -350,15 +360,15 @@ public partial class reserva_acept : ContentPage
                 id_pelicula= Id_pelicula,
                 aciento= acientos[i],
                 ciudad=Ciudad,
-                fecha = "2024-03-01",
-                hora = "7:00pm",
+                fecha = Fecha,
+                hora = Hora,
                 id_reserva = id
             };
             models.Msg msg = await controllers.controlleraciento.Createacien(hisrese);
 
             if (msg != null)
             {
-
+                
             }
         }
 
@@ -382,6 +392,7 @@ public partial class reserva_acept : ContentPage
             if (msg != null)
             {
                 ms= true;
+                
             }
             else
             {
@@ -393,6 +404,43 @@ public partial class reserva_acept : ContentPage
         {
             
             
+        }
+    }
+    public async void notificacion()
+    {
+        int h = 0;
+        int id = Preferences.Get("Ida", 2);
+        if (Hora == "4:00pm") {
+            h = 15;
+        }
+        else if(Hora=="6:00pm") {
+            h = 17;
+        }
+        else if (Hora == "8:00pm")
+        {
+            h = 19;
+        }
+
+        try
+        {
+            var request = new NotificationRequest()
+            {
+                NotificationId = id,
+                Title = "Cinepolis",
+                Subtitle = "Reservacion",
+                Description = "En unos minutos empieza la pelicula",
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = new DateTime(2024, 3, 27, h, 40, 0),
+                },
+
+            };
+            await LocalNotificationCenter.Current.Show(request);
+            Preferences.Set("Ida", (id + 1));
+        }
+        catch (Exception ex)
+        {
+
         }
     }
 }

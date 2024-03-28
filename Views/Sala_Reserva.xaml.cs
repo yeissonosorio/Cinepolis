@@ -12,10 +12,13 @@ namespace Cinepolis
         int count = 0;
         int a = 0;
         int Id_pelicula = 1;
-        string Ciudad = "sps";
-        string Fecha = "2024-03-01";
-        string Hora = "7:00pm";
-        string imagen;
+        string Ciudad ;
+        string Fecha ;
+        string FechaI;
+        string Hora ;
+        string Imagen;
+        string Nombre;
+        string url;
         private List<string> nombresSeleccionados = new List<string>();
         private List<string> aciento = new List<string>();
         List<Clase.Producto> pro = new List<Clase.Producto>();
@@ -24,13 +27,38 @@ namespace Cinepolis
 
         public ObservableCollection<models.acientos> Posts { get; set; }
 
-        public Sala_Reserva()
+        public Sala_Reserva(int id,string nombre,string imagen,string ciudad,string fechan,string fechab,string hora)
         {
             InitializeComponent();
 
             Shell.SetTabBarIsVisible(this, false);
             activityIndicator.IsRunning = true;
             activityIndicator.IsVisible = true;
+            Ciudad = ciudad;
+            Id_pelicula = id;
+            Nombre = nombre;
+            Imagen = imagen;
+            Fecha= fechab;
+            FechaI = fechan;
+            Hora = hora;
+
+            nom.Text = Nombre;
+            ubi.Text = Ciudad;
+            calendario.Text = FechaI+" "+Hora;
+
+            if(Ciudad== "San Pedro Sula")
+            {
+                url = "San+Pedro+Sula";
+            }
+            else if(Ciudad== "Tegucigalpa") {
+                url = "Tegucigalpa";
+            }
+
+            if (!string.IsNullOrEmpty(imagen))
+            {
+                poster.Source = ConvertirImagenBase64AImageSource(imagen);
+            }
+
             Elementos = new ObservableCollection<ElementoModel>();
             BindingContext = this;
         }
@@ -216,11 +244,11 @@ namespace Cinepolis
                 bool result = await DisplayAlert("", "Desea agregar un snack a su reserva", "SI", "NO");
                 if (result)
                 {
-                    await Navigation.PushAsync(new snack(nombresSeleccionados));
+                    await Navigation.PushAsync(new snack(nombresSeleccionados,Id_pelicula,Ciudad,Fecha,Hora,Imagen));
                 }
                 else
                 {
-                    await Navigation.PushAsync(new reserva_acept(pro,nombresSeleccionados));
+                    await Navigation.PushAsync(new reserva_acept(pro,nombresSeleccionados,Id_pelicula,Ciudad,Fecha,Hora,Imagen));
                 }
             }
         }
@@ -283,6 +311,16 @@ namespace Cinepolis
                 // Manejar cualquier excepción que pueda ocurrir
                 Console.WriteLine("Error al verificar y eliminar registros antiguos: " + ex.Message);
             }
+        }
+
+        private ImageSource ConvertirImagenBase64AImageSource(string imagenBase64)
+        {
+            if (string.IsNullOrEmpty(imagenBase64))
+                return null;
+
+            byte[] imageBytes = Convert.FromBase64String(imagenBase64);
+            Stream imageStream = new MemoryStream(imageBytes);
+            return ImageSource.FromStream(() => imageStream);
         }
     }
 }

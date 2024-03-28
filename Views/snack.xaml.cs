@@ -6,23 +6,27 @@ namespace Cinepolis;
 public partial class snack : ContentPage
 {
 
-    int[] count = {0,0,0};
+    int[] count = { 0, 0, 0 };
     int total = 0;
-    int[] sub = {0,0,0};
+    int[] sub = { 0, 0, 0 };
 
     List<string> nomacientos;
-    int Id_pelicula = 1;
-    string Ciudad = "sps";
-    string Fecha = "2024-03-01";
-    string Hora = "7:00pm";
+    int Id_pelicula;
+    string Ciudad;
+    string Fecha;
+    string Hora;
     string imagen;
-    public snack(List<string> acientos)
-	{
+    public snack(List<string> acientos, int pel, string ciu, string fech, string hor, string ima)
+    {
 
-		InitializeComponent();
+        InitializeComponent();
         this.nomacientos = acientos;
         Shell.SetTabBarIsVisible(this, false);
-
+        Id_pelicula = pel;
+        Ciudad = ciu;
+        Fecha = fech;
+        Hora = hor;
+        imagen = ima;
     }
 
     public async void mas_Cliked(object sender, EventArgs e)
@@ -30,7 +34,7 @@ public partial class snack : ContentPage
         count[0]++;
         snack1.Text = count[0].ToString();
         total += 60;
-        tot.Text= total.ToString();
+        tot.Text = total.ToString();
     }
 
     public async void menos_Cliked(object sender, EventArgs e)
@@ -85,24 +89,31 @@ public partial class snack : ContentPage
     public async void btncontinuar_click(object sender, EventArgs e)
     {
         List<Clase.Producto> listCombo = new List<Clase.Producto>();
-        if (snack1.Text != "0")
+        if (snack1.Text != "0" || snack2.Text != "0" || snack3.Text != "0")
         {
-            sub[0] = count[0] * 60;
-            Clase.Producto pro = new Clase.Producto {id=1, name = "Nachos", cantidad = count[0], precio=60, sub = sub[0] };
-            listCombo.Add(pro);
+            if (snack1.Text != "0")
+            {
+                sub[0] = count[0] * 60;
+                Clase.Producto pro = new Clase.Producto { id = 1, name = "Nachos", cantidad = count[0], precio = 60, sub = sub[0] };
+                listCombo.Add(pro);
+            }
+            if (snack2.Text != "0")
+            {
+                sub[1] = count[1] * 140;
+                Clase.Producto pro = new Clase.Producto { id = 2, name = "Combo 1", cantidad = count[1], precio = 140, sub = sub[1] };
+                listCombo.Add(pro);
+            }
+            if (snack3.Text != "0")
+            {
+                sub[2] = count[2] * 180;
+                Clase.Producto pro = new Clase.Producto { id = 3, name = "Combo 2", cantidad = count[2], precio = 180, sub = sub[2] };
+                listCombo.Add(pro);
+            }
+            await Navigation.PushAsync(new reserva_acept(listCombo, nomacientos,Id_pelicula,Ciudad,Fecha,Hora,imagen));
         }
-        if(snack2.Text != "0")
+        else
         {
-            sub[1] = count[1] * 140;
-            Clase.Producto pro = new Clase.Producto { id = 2, name = "Combo 1", cantidad = count[1], precio = 140, sub = sub[1] };
-            listCombo.Add(pro);
+            await DisplayAlert("Aviso", "Seleccione un snack", "Ok");
         }
-        if (snack3.Text != "0")
-        {
-            sub[2] = count[2] * 180;
-            Clase.Producto pro = new Clase.Producto { id = 3,name="Combo 2" , cantidad = count[2], precio = 180, sub = sub[2] };
-            listCombo.Add(pro);
-        }
-        await Navigation.PushAsync(new reserva_acept(listCombo,nomacientos));
     }
 }
