@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.Cartelera"
+             xmlns:converters="clr-namespace:Cinepolis.Converters"
+             Title=""
+             Background="White">
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Cartelera"  TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" Padding="0,0,50,0" HeightRequest="50" FontSize="30" FontFamily="ProtestGuerrillaRegular"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <ScrollView>
+        <VerticalStackLayout>
+            <ActivityIndicator x:Name="activityIndicator" IsRunning="True" Color="#0583fe" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+            <StackLayout x:Name="S">
+                <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" SelectionChanged="OnCollectionViewSelectionChanged">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" Padding="5" CornerRadius="10" Margin="5" InputTransparent="True">
+                                <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
+                                    <StackLayout>
+                                        <Image Source="{Binding imagen , Converter={StaticResource ByteArrayToImageSourceConverter}}" WidthRequest="100"></Image>
+                                    </StackLayout>
+                                    <StackLayout Margin="10">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                                            <Label Text="{Binding nombre}" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Descripción" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <ScrollView>
+                                                <Label Text="{Binding descripcion}" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black" LineBreakMode="WordWrap" HorizontalOptions="FillAndExpand"></Label>
+                                            </ScrollView>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

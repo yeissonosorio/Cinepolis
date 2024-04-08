@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.informacion_reserva"
+             Title="informacion_reserva" 
+             Background="White">
+
+    
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Reserva" FontFamily="ProtestGuerrillaRegular" TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" HeightRequest="50" FontSize="30"  Margin="0,0,50,0"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <ScrollView>
+    <VerticalStackLayout>
+        <Frame CornerRadius="10" HasShadow="True" ZIndex="1" Margin="10" x:Name="frame">
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal" Padding="0,0,10,0" Margin="0">
+                    <StackLayout>
+                            <Image x:Name="poster"  WidthRequest="100"></Image>
+                    </StackLayout>
+                    <StackLayout Margin="10">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                                <Label x:Name="nom" Text="" FontFamily="OswaldRegular" FontSize="14" TextColor="Black" Padding="5"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="ubicacion.png" WidthRequest="30"></Image>
+                            <Label x:Name="ub" Text="" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="calendario.png" WidthRequest="30"></Image>
+                            <Label x:Name="fecha" Text="" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" x:Name="conte">
+                    <Label Text="Descripción" FontFamily="OswaldRegular" FontAttributes="Bold" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label x:Name="sal" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label x:Name="canti" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Label x:Name="totbol" Text="" FontFamily="OswaldRegular" FontSize="20" Margin="10" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    
+                    </StackLayout>
+            </StackLayout>
+        </Frame>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

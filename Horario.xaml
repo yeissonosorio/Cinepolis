@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.Horario"
+             Title="Horario">
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Horario"  TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" Margin="0,0,70,0" HeightRequest="50" FontSize="30" FontFamily="ProtestGuerrillaRegular" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0" >
+
+            <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
+                <StackLayout>
+                    <Image x:Name="poster" WidthRequest="100"></Image>
+                </StackLayout>
+                <StackLayout Margin="10">
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                        <Label x:Name="nom" Text="" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,20,0,0">
+                        <Image Source="ubicacion.png" WidthRequest="30"></Image>
+                        <Label x:Name="ub" Text="" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+
+            <Frame WidthRequest="300" HeightRequest="100" BackgroundColor="#0583fe" BorderColor="Black" Padding="0" CornerRadius="0" Margin="0,50,0,0">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                    <Frame WidthRequest="280" HeightRequest="80" BackgroundColor="White" BorderColor="Black" Padding="0" CornerRadius="0">
+                        <!-- Corregir StackLyout por StackLayout -->
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                            <Label Text="Fecha de la Reservación" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20"/>
+                            <DatePicker x:Name="datePicker" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" DateSelected="DatePicker_DateSelected"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+            
+            <Frame WidthRequest="280" HeightRequest="80" BackgroundColor="#0583fe" BorderColor="Black" Padding="0" CornerRadius="0" Margin="5">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                    <Frame WidthRequest="260" HeightRequest="60" BackgroundColor="White" BorderColor="Black" Padding="0" CornerRadius="0">
+                        <!-- Corregir StackLyout por StackLayout -->
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                            <Button Text="4:00 PM" BackgroundColor="White" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="260" HeightRequest="60" FontSize="24" Clicked="OnButtonClicked4"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+            <Frame WidthRequest="280" HeightRequest="80" BackgroundColor="#0583fe" BorderColor="Black" Padding="0" CornerRadius="0" Margin="5">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                    <Frame WidthRequest="260" HeightRequest="60" BackgroundColor="White" BorderColor="Black" Padding="0" CornerRadius="0" Margin="5">
+                        <!-- Corregir StackLyout por StackLayout -->
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                            <Button Text="6:00 PM" BackgroundColor="White" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="260" HeightRequest="60" FontSize="24" Clicked="OnButtonClicked6"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+            
+            <Frame WidthRequest="280" HeightRequest="80" BackgroundColor="#0583fe" BorderColor="Black" Padding="0" CornerRadius="0" Margin="5">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                    <Frame WidthRequest="260" HeightRequest="60" BackgroundColor="White" BorderColor="Black" Padding="0" CornerRadius="0">
+                        <!-- Corregir StackLyout por StackLayout -->
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                            <Button Text="8:00 PM" BackgroundColor="White" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="260" HeightRequest="60" FontSize="24" Clicked="OnButtonClicked8"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

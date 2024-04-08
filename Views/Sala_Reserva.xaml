@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.Sala_Reserva"
+             Title="Sala_Reserva" 
+             Background="White">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0,0,45,0">
+            <Label Text="Selección de sillas" FontFamily="ProtestGuerrillaRegular" TextColor="White"  VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" HeightRequest="50" FontSize="30" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    
+    
+
+    <ScrollView >
+        <VerticalStackLayout
+    Padding="30,0"
+    Spacing="25">
+            <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
+                <StackLayout>
+                    <Image x:Name="poster" WidthRequest="100"></Image>
+                </StackLayout>
+                <StackLayout Margin="10">
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                        <Label x:Name="nom" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="ubicacion.png" WidthRequest="30"></Image>
+                        <Label x:Name="ubi" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="calendario.png" WidthRequest="30"></Image>
+                        <Label x:Name="calendario" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout x:Name="indi" HeightRequest="227">
+                <ActivityIndicator x:Name="activityIndicator" Margin="110"/>
+            </StackLayout>
+
+            <CollectionView x:Name="miCollectionView" ItemsSource="{Binding Elementos}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                     Span="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5">
+                            <AbsoluteLayout WidthRequest="40" HeightRequest="40">
+                                <Image x:Name="{Binding Name, StringFormat='Image_{0}'}" 
+               Source="{Binding Icono}" 
+               WidthRequest="40" 
+               HeightRequest="40"
+               Aspect="AspectFit"
+               AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsEnabled="True">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Image_Tapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label Text="{Binding Name}" 
+               TextColor="Black" 
+               FontSize="12" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center"
+               AbsoluteLayout.LayoutBounds="0.5,0.3,AutoSize,AutoSize"
+               AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                            </AbsoluteLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                <Image Source="iconoa.png" WidthRequest="30"></Image>
+                <Label Text="Disponible" FontFamily="OswaldRegular" Padding="10" TextColor="Black"/>
+
+                <Image Source="iconoac.png" WidthRequest="30"></Image>
+                <Label Text="Tu selección" FontFamily="OswaldRegular" Padding="10" TextColor="Black"/>
+
+                <Image Source="iconore.png" WidthRequest="30"></Image>
+                <Label Text="Reservado" FontFamily="OswaldRegular" Padding="10" TextColor="Black"/>
+            </StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Contenido superior -->
+                <StackLayout Grid.Row="0" VerticalOptions="End">
+                    <Label x:Name="LabelN" Text="No hay sillas disponibles aún" FontFamily="OswaldRegular" FontSize="20" Margin="0,20,0,5" TextColor="Black"></Label>
+                </StackLayout>
+
+                <!-- Contenido inferior -->
+                <StackLayout Grid.Row="1" Background="#0583fe" HeightRequest="50" Orientation="Horizontal" Margin="0,10,0,0">
+                    <Image></Image>
+                    <Image Source="iconocarro.png"></Image>
+                    <Label x:Name="tot" Text="L.0" TextColor="White" FontSize="20" Padding="10"></Label>
+                    <Button x:Name="Continuar" Text="Continuar" WidthRequest="100" HeightRequest="40" FontSize="15" Background="White" TextColor="#0583fe" FontFamily="OswaldRegular" Padding="5,0,0,5" HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Clicked="btncontinuar_click"></Button>
+                </StackLayout>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

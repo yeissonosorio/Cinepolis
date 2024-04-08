@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinepolis.Historial"
+             Title=""
+             xmlns:converters="clr-namespace:Cinepolis.Converters"
+             Background="White">
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+    </ContentPage.Resources>
+    
+        <!-- Para que no aparesca el boton de regresar-->
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <!-- Barra de titulo-->
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Historial"  TextColor="White" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" Margin="0,0,0,0" HeightRequest="50" FontSize="30" FontFamily="ProtestGuerrillaRegular" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <ScrollView>
+        <!-- Contenido-->
+    <VerticalStackLayout>
+        <Image x:Name="imagenpa" Source="palomitas.png" HeightRequest="200" WidthRequest="200" Aspect="AspectFit" Margin="0,100,0,0"></Image>
+        <Label x:Name="textosin" Text="No se tiene registro de acvividad de compra" FontSize="20" Margin="30"  FontFamily="OswaldRegular" TextColor="Black"></Label>
+        <ActivityIndicator x:Name="activityIndicator" IsRunning="True" Color="#0583fe" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" IsVisible="true"/>
+            
+        <StackLayout x:Name="S">
+                <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" SelectionChanged="OnCollectionViewSelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <Frame BackgroundColor="White" Padding="5" CornerRadius="10" Margin="5" InputTransparent="True">
+                        <StackLayout Orientation="Horizontal" Padding="0,10,10,0">
+                            <StackLayout>
+                                 <Image Source="{Binding imagen_pelicula , Converter={StaticResource ByteArrayToImageSourceConverter}}" WidthRequest="100"></Image>
+                            </StackLayout>
+                            <StackLayout Margin="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="iconopeli.png" WidthRequest="30"></Image>
+                                    <Label Text="{Binding nombre_pelicula}" FontFamily="OswaldRegular" FontSize="14" TextColor="Black"></Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="calendario.png" WidthRequest="30"></Image>
+                                    <Label Text="{Binding fecha}" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                    <Label Text="{Binding hora}" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                 </StackLayout>
+                                 <StackLayout Orientation="Horizontal">
+                                    <Image Source="iconoa.png" WidthRequest="30"></Image>
+                                    <Label Text="Sala" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                    <Label Text="{Binding nombre_sala}" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                 </StackLayout>
+                                 <StackLayout Orientation="Horizontal">
+                                            <Image Source="dinero.png" WidthRequest="30"></Image>
+                                            <Label Text="{Binding total}" FontFamily="OswaldRegular" FontSize="14" Padding="5" TextColor="Black"></Label>
+                                 </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+    
